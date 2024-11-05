@@ -189,7 +189,7 @@ class Testing
                     print_r($array);
                     echo '<pre>';
                 }
-                
+
                 $searching->linearSearch($array, $searchItem);
 
                 $array = $sorting->quickSort($array);
@@ -208,8 +208,8 @@ class Testing
                     print_r($array);
                     echo '<pre>';
                 }
-                
-                $searching->linearSearch($array, $searchItem);               
+
+                $searching->linearSearch($array, $searchItem);
 
                 break;
 
@@ -219,8 +219,8 @@ class Testing
                     echo '<pre>';
                     print_r($array);
                     echo '<pre>';
-                }                
-                
+                }
+
                 $array = $sorting->quickSort($array);
                 echo 'Search in array:<br>';
                 echo '<pre>';
@@ -229,11 +229,11 @@ class Testing
                 $searching->binarySearch($array, $searchItem);
 
                 break;
-            
+
             default:
                 echo 'Incorrect argument $testName, it can be: ALL, LINEAR, BINARY]';
                 break;
         }
-        
+
     }
 }

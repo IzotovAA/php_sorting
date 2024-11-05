@@ -12,7 +12,7 @@ class Searching
         $result = -1;
         $count = 0;
 
-        for ($i=0; $i < count($arr); $i++) {
+        for ($i = 0; $i < count($arr); $i++) {
             $count++;
 
             if ($arr[$i] === $item) {
@@ -33,7 +33,7 @@ class Searching
         return $result;
     }
 
-    public function binarySearch(array $arr, int $item): int 
+    public function binarySearch(array $arr, int $item): int
     {
         $startTime = microtime(true);
         $result = -1;
@@ -41,7 +41,7 @@ class Searching
         $lenght = count($arr);
         $left = 0;
         $right = $lenght - 1;
-        $midle = (int) floor($right/2);
+        $midle = (int) floor($right / 2);
 
         while ($left < $right) {
             $count++;
@@ -53,12 +53,12 @@ class Searching
                 break;
             } elseif ($arr[$midle] < $item) {
                 $left = $midle;
-                $midle = (int) floor(($right + $left)/2);
+                $midle = (int) floor(($right + $left) / 2);
             } elseif ($arr[$midle] > $item) {
                 $arr = array_slice($arr, 0, $midle);
                 $right = $midle;
-                $midle = (int) floor(($right + $left)/2);
-            } 
+                $midle = (int) floor(($right + $left) / 2);
+            }
         }
 
         echo 'Binary search count = ' . $count . '<br>';

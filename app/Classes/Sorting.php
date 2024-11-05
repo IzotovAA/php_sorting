@@ -92,7 +92,7 @@ class Sorting
                 $arr[$minElementIndex] = $arr[$i];
                 $arr[$i] = $temp;
             }
-            
+
             $count++;
         }
 
@@ -191,7 +191,7 @@ class Sorting
 
     public function mergeSort(array $initialArray): array
     {
-        $startTime = microtime(true);        
+        $startTime = microtime(true);
 
         $resultArr = $this->mergeSortDivisionUtility($initialArray);
 
@@ -246,5 +246,5 @@ class Sorting
         }
 
         return $result;
-    }    
+    }
 }
