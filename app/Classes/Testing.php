@@ -1,20 +1,20 @@
 <?php
 
-namespace Classes;
+declare(strict_types=1);
 
-require_once 'vendor/autoload.php';
+namespace Classes;
 
 class Testing
 {
     private function createArray(int $elemenysQty): array
     {
-        $arr = [];
+        $newArray = [];
 
         for ($i = 0; $i < $elemenysQty; $i++) {
-            $arr[] = mt_rand(-10000, 10000);
+            $newArray[] = mt_rand(-20, 20);
         }
 
-        return $arr;
+        return $newArray;
     }
 
     private function checkArraySorting(array $arr): bool
@@ -32,7 +32,7 @@ class Testing
         return $flag;
     }
 
-    public function startTesting(int $elementsQty, string $testName = 'ALL', bool $printArray = false): void
+    public function startTestSorting(int $elementsQty, string $testName = 'ALL', bool $printArray = false): void
     {
         // $testName variants: ['ALL', 'BUBLE', 'SELECTION', 'QUICK', 'MERGE']
 
@@ -164,5 +164,76 @@ class Testing
                 echo 'Incorrect argument $testName, it can be: ALL, BUBLE, SELECTION, QUICK, MERGE';
                 break;
         }
+    }
+
+    public function startTestSearching(int | array $qtyOrArr, int $searchItem, string $testName = 'ALL', bool $printResult = false)
+    {
+        // $testName variants: ['ALL', 'LINEAR', 'BINARY']
+
+        $searching = new \Classes\Searching();
+        $sorting = new \Classes\Sorting();
+
+        $array = [];
+
+        if (gettype($qtyOrArr) == 'integer') {
+            $array = $this->createArray($qtyOrArr);
+        } else {
+            $array = $qtyOrArr;
+        }
+
+        switch ($testName) {
+            case 'ALL':
+                if ($printResult === true) {
+                    echo 'Search in array:<br>';
+                    echo '<pre>';
+                    print_r($array);
+                    echo '<pre>';
+                }
+
+                $searching->linearSearch($array, $searchItem);
+
+                $array = $sorting->quickSort($array);
+                echo 'Search in array:<br>';
+                echo '<pre>';
+                print_r($array);
+                echo '<pre>';
+                $searching->binarySearch($array, $searchItem);
+
+                break;
+
+            case 'LINEAR':
+                if ($printResult === true) {
+                    echo 'Search in array:<br>';
+                    echo '<pre>';
+                    print_r($array);
+                    echo '<pre>';
+                }
+
+                $searching->linearSearch($array, $searchItem);
+
+                break;
+
+            case 'BINARY':
+                if ($printResult === true) {
+                    echo 'Search in array:<br>';
+                    echo '<pre>';
+                    print_r($array);
+                    echo '<pre>';
+                }
+
+                $array = $sorting->quickSort($array);
+                echo 'Search in array:<br>';
+                echo '<pre>';
+                print_r($array);
+                echo '<pre>';
+                $searching->binarySearch($array, $searchItem);
+
+                break;
+
+            default:
+                echo 'Incorrect argument $testName, it can be: ALL, LINEAR, BINARY]';
+                break;
+        }
+
     }
 }
