@@ -4,7 +4,13 @@ require_once 'vendor/autoload.php';
 
 set_time_limit(60);
 
-$testSorting = new \Classes\Testing();
+$reverse = new \Classes\StringReverse();
 
-// $testName variants: ['ALL', 'BUBLE', 'SELECTION', 'QUICK', 'MERGE']
-$testSorting->startTesting(1000, 'ALL', false);
+echo 'Привет Hello, world!<br>';
+echo $reverse->reverse('Привет Hello, world!') . '<br><br>';
+
+echo 'Пустая строка<br>';
+echo $reverse->reverse('') . '<br><br>';
+
+echo 'Лёша на полке клопа нашёл<br>';
+echo $reverse->reverse('Лёша на полке клопа нашёл') . '<br><br>';
