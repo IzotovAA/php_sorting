@@ -6,6 +6,13 @@ namespace Classes;
 
 class Testing
 {
+    private object $sorting;
+
+    public function __construct()
+    {
+        $this->sorting = new \Classes\Sorting();
+    }
+
     private function createArray(int $elemenysQty): array
     {
         $newArray = [];
@@ -34,206 +41,114 @@ class Testing
 
     public function startTestSorting(int $elementsQty, string $testName = 'ALL', bool $printArray = false): void
     {
-        // $testName variants: ['ALL', 'BUBLE', 'SELECTION', 'QUICK', 'MERGE']
-
-        $sorting = new \Classes\Sorting();
-
         $randomArray = $this->createArray($elementsQty);
         echo 'array elements quantity = ' . count($randomArray) . '<br><br>';
 
-        switch ($testName) {
-            case 'ALL':
-                $bubleSort = $sorting->bubleSort($randomArray);
-                $bubleSortImproved = $sorting->bubleSortImproved($randomArray);
-                $selectionSort = $sorting->selectionSort($randomArray);
-                $selectionSortImproved = $sorting->selectionSortImproved($randomArray);
-                $quickSort = $sorting->quickSort($randomArray);
-                $mergeSort = $sorting->mergeSort($randomArray);
-                echo 'Check array sorting (bubleSort): ' . ($this->checkArraySorting($bubleSort) ? 'True' : 'False') . '<br>';
-                echo 'Check array sorting (bubleSortImproved): ' . ($this->checkArraySorting($bubleSortImproved) ? 'True' : 'False') . '<br>';
-                echo 'Check array sorting (selectionSort): ' . ($this->checkArraySorting($selectionSort) ? 'True' : 'False') . '<br>';
-                echo 'Check array sorting (selectionSortImproved): ' . ($this->checkArraySorting($selectionSortImproved) ? 'True' : 'False') . '<br>';
-                echo 'Check array sorting (quickSort): ' . ($this->checkArraySorting($quickSort) ? 'True' : 'False') . '<br>';
-                echo 'Check array sorting (mergeSort): ' . ($this->checkArraySorting($mergeSort) ? 'True' : 'False') . '<br>';
+        try {
+            $matchResult = match ($testName) {
+                'ALL' => function($randomArray, $printArray):void 
+                {
+                    $sortNameAndSortedArray = [
+                    'bubleSort' => $this->sorting->bubleSort($randomArray),
+                    'bubleSortImproved' => $this->sorting->bubleSortImproved($randomArray),
+                    'selectionSort' => $this->sorting->selectionSort($randomArray),
+                    'selectionSortImproved' => $this->sorting->selectionSortImproved($randomArray),
+                    'quickSort' => $this->sorting->quickSort($randomArray),
+                    'mergeSort' => $this->sorting->mergeSort($randomArray)
+                    ];
+    
+                    $this->testHandler($sortNameAndSortedArray);               
+    
+                    if ($printArray) {
+                        $this->printArray($randomArray, $sortNameAndSortedArray);                   
+                    }
+                },
 
-                if ($printArray) {
-                    echo '<pre>';
-                    echo 'Array before sorting <br>';
-                    print_r($randomArray);
-                    echo '<br>';
-                    echo '<br>Array after sorting by bubleSort<br>';
-                    print_r($bubleSort);
-                    echo '<br>';
-                    echo '<br>Array after sorting by bubleSortImproved<br>';
-                    print_r($bubleSortImproved);
-                    echo '<br>';
-                    echo '<br>Array after sorting by selectionSort<br>';
-                    print_r($selectionSort);
-                    echo '<br>';
-                    echo '<br>Array after sorting by selectionSortImproved<br>';
-                    print_r($selectionSortImproved);
-                    echo '<br>';
-                    echo '<br>Array after sorting by quickSort<br>';
-                    print_r($quickSort);
-                    echo '<br>';
-                    echo '<br>Array after sorting by mergeSort<br>';
-                    print_r($mergeSort);
-                    echo '</pre>';
-                }
+                'BUBLE' => function($randomArray, $printArray):void
+                {
+                    $sortNameAndSortedArray = [
+                    'bubleSort' => $this->sorting->bubleSort($randomArray),
+                    'bubleSortImproved' => $this->sorting->bubleSortImproved($randomArray)                    
+                    ];
+                
+                    $this->testHandler($sortNameAndSortedArray);               
+                
+                    if ($printArray) {
+                        $this->printArray($randomArray, $sortNameAndSortedArray);                   
+                    }
+                },    
 
-                break;
+                'SELECTION' => function($randomArray, $printArray):void 
+                {
+                    $sortNameAndSortedArray = [                    
+                        'selectionSort' => $this->sorting->selectionSort($randomArray),
+                        'selectionSortImproved' => $this->sorting->selectionSortImproved($randomArray)
+                    ];
+    
+                    $this->testHandler($sortNameAndSortedArray);               
+    
+                    if ($printArray) {
+                        $this->printArray($randomArray, $sortNameAndSortedArray);                   
+                    }
+                },    
 
-            case 'BUBLE':
-                $bubleSort = $sorting->bubleSort($randomArray);
-                $bubleSortImproved = $sorting->bubleSortImproved($randomArray);
-                echo 'Check array sorting (bubleSort): ' . ($this->checkArraySorting($bubleSort) ? 'True' : 'False') . '<br>';
-                echo 'Check array sorting (bubleSortImproved): ' . ($this->checkArraySorting($bubleSortImproved) ? 'True' : 'False') . '<br>';
+                'QUICK' => function($randomArray, $printArray):void
+                {
+                    $sortNameAndSortedArray = ['quickSort' => $this->sorting->quickSort($randomArray)];
+    
+                    $this->testHandler($sortNameAndSortedArray);               
+    
+                    if ($printArray) {
+                        $this->printArray($randomArray, $sortNameAndSortedArray);
+                    }
+                },    
 
-                if ($printArray) {
-                    echo '<pre>';
-                    echo 'Array before sorting <br>';
-                    print_r($randomArray);
-                    echo '<br>';
-                    echo '<br>Array after sorting by bubleSort<br>';
-                    print_r($bubleSort);
-                    echo '<br>';
-                    echo '<br>Array after sorting by bubleSortImproved<br>';
-                    print_r($bubleSortImproved);
-                    echo '<br>';
-                    echo '</pre>';
-                }
+                'MERGE' => function($randomArray, $printArray):void
+                {
+                    $sortNameAndSortedArray = ['mergeSort' => $this->sorting->mergeSort($randomArray)];
+    
+                    $this->testHandler($sortNameAndSortedArray);               
+    
+                    if ($printArray) {
+                        $this->printArray($randomArray, $sortNameAndSortedArray);                   
+                    }                
+                },    
 
-                break;
+                default => function():void
+                {
+                    echo 'Incorrect argument $testName, it can be: ALL, BUBLE, SELECTION, QUICK, MERGE';
+                },
+            };
 
-            case 'SELECTION':
-                $selectionSort = $sorting->selectionSort($randomArray);
-                $selectionSortImproved = $sorting->selectionSortImproved($randomArray);
-                echo 'Check array sorting (selectionSort): ' . ($this->checkArraySorting($selectionSort) ? 'True' : 'False') . '<br>';
-                echo 'Check array sorting (selectionSortImproved): ' . ($this->checkArraySorting($selectionSortImproved) ? 'True' : 'False') . '<br>';
+            $matchResult($randomArray, $printArray);
 
-                if ($printArray) {
-                    echo '<pre>';
-                    echo 'Array before sorting <br>';
-                    print_r($randomArray);
-                    echo '<br>';
-                    echo '<br>Array after sorting by selectionSort<br>';
-                    print_r($selectionSort);
-                    echo '<br>';
-                    echo '<br>Array after sorting by selectionSortImproved<br>';
-                    print_r($selectionSortImproved);
-                    echo '<br>';
-                    echo '</pre>';
-                }
-
-                break;
-
-            case 'QUICK':
-                $quickSort = $sorting->quickSort($randomArray);
-                echo 'Check array sorting (quickSort): ' . ($this->checkArraySorting($quickSort) ? 'True' : 'False') . '<br>';
-
-                if ($printArray) {
-                    echo '<pre>';
-                    echo 'Array before sorting <br>';
-                    print_r($randomArray);
-                    echo '<br>';
-                    echo '<br>Array after sorting by quickSort<br>';
-                    print_r($quickSort);
-                    echo '<br>';
-                    echo '</pre>';
-                }
-
-                break;
-
-            case 'MERGE':
-                $mergeSort = $sorting->mergeSort($randomArray);
-                echo 'Check array sorting (mergeSort): ' . ($this->checkArraySorting($mergeSort) ? 'True' : 'False') . '<br>';
-
-                if ($printArray) {
-                    echo '<pre>';
-                    echo 'Array before sorting <br>';
-                    print_r($randomArray);
-                    echo '<br>';
-                    echo '<br>Array after sorting by mergeSort<br>';
-                    print_r($mergeSort);
-                    echo '</pre>';
-                }
-
-                break;
-
-            default:
-                echo 'Incorrect argument $testName, it can be: ALL, BUBLE, SELECTION, QUICK, MERGE';
-                break;
-        }
+        } catch (\Throwable $th) {
+            echo 'match error';
+            var_dump($th);
+        }        
     }
 
-    public function startTestSearching(int | array $qtyOrArr, int $searchItem, string $testName = 'ALL', bool $printResult = false)
+    private function testHandler(array $array): void
     {
-        // $testName variants: ['ALL', 'LINEAR', 'BINARY']
+        foreach ($array as $key => $value) {
+            echo "Check array sorting ($key): " . ($this->checkArraySorting($value) ? 'True' : 'False') . '<br>';
+        }        
+    }   
 
-        $searching = new \Classes\Searching();
-        $sorting = new \Classes\Sorting();
+    private function printArray(array $unsortedArray, array $sortNameAndSortedArray): void
+    {
+        echo '<pre>'; 
+        echo 'Array before sorting <br>';
+        print_r($unsortedArray);
+        echo '<br>';
+        echo '<pre>';
 
-        $array = [];
-
-        if (gettype($qtyOrArr) == 'integer') {
-            $array = $this->createArray($qtyOrArr);
-        } else {
-            $array = $qtyOrArr;
-        }
-
-        switch ($testName) {
-            case 'ALL':
-                if ($printResult === true) {
-                    echo 'Search in array:<br>';
-                    echo '<pre>';
-                    print_r($array);
-                    echo '<pre>';
-                }
-
-                $searching->linearSearch($array, $searchItem);
-
-                $array = $sorting->quickSort($array);
-                echo 'Search in array:<br>';
-                echo '<pre>';
-                print_r($array);
-                echo '<pre>';
-                $searching->binarySearch($array, $searchItem);
-
-                break;
-
-            case 'LINEAR':
-                if ($printResult === true) {
-                    echo 'Search in array:<br>';
-                    echo '<pre>';
-                    print_r($array);
-                    echo '<pre>';
-                }
-
-                $searching->linearSearch($array, $searchItem);
-
-                break;
-
-            case 'BINARY':
-                if ($printResult === true) {
-                    echo 'Search in array:<br>';
-                    echo '<pre>';
-                    print_r($array);
-                    echo '<pre>';
-                }
-
-                $array = $sorting->quickSort($array);
-                echo 'Search in array:<br>';
-                echo '<pre>';
-                print_r($array);
-                echo '<pre>';
-                $searching->binarySearch($array, $searchItem);
-
-                break;
-
-            default:
-                echo 'Incorrect argument $testName, it can be: ALL, LINEAR, BINARY]';
-                break;
-        }
-
+        foreach ($sortNameAndSortedArray as $key => $value) {
+            echo '<pre>';            
+            echo "<br>Array after sorting by $key<br>";
+            print_r($value);
+            echo '<br>';
+            echo '<pre>';
+        }        
     }
 }

@@ -84,10 +84,9 @@ class Sorting
                 if ($arr[$j] < $arr[$minElementIndex]) {
                     $minElementIndex = $j;
                 }
-            }
+            }           
 
-            if ($minElementIndex === $i) {
-            } else {
+            if ($minElementIndex !== $i) {            
                 $temp = $arr[$minElementIndex];
                 $arr[$minElementIndex] = $arr[$i];
                 $arr[$i] = $temp;
@@ -120,10 +119,11 @@ class Sorting
             $maxElementIndex = $last - $i;
             $lastMaxElementPosition = $last - $i;
 
-            for ($j = $i; $j < $last; $j++) {
+            for ($j = $i; $j < $last; $j++) {                
                 if ($arr[$j + 1] < $arr[$minElementIndex]) {
                     $minElementIndex = $j + 1;
                 }
+
                 if ($i < $limit && $arr[$last - $j] > $arr[$maxElementIndex]) {
                     $maxElementIndex = $last - $j;
                 }
