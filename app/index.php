@@ -16,5 +16,3 @@ echo $reverse->reverse('') . '<br><br>';
 
 echo 'Лёша на полке клопа нашёл<br>';
 echo $reverse->reverse('Лёша на полке клопа нашёл') . '<br><br>';
-
-
